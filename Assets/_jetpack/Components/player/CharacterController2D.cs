@@ -19,7 +19,9 @@ public class CharacterController2D : MonoBehaviour
   CapsuleCollider2D mainCollider;
   Transform t;
 
-  // Use this for initialization
+  public bool canClimb { get; set; } = false;
+  private bool _isClimbing = false;
+
   void Start()
   {
     t = transform;
@@ -67,8 +69,22 @@ public class CharacterController2D : MonoBehaviour
       }
     }
 
+    // Ladder climb
+    if (canClimb)
+    {
+      r2d.gravityScale = 0;
+      if (Input.GetKey(KeyCode.W))
+      {
+        r2d.velocity = new Vector2(r2d.velocity.x, maxSpeed);
+      }
+    }
+    else
+    {
+      r2d.gravityScale = gravityScale;
+    }
+
     // Jumping
-    if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+    if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
     {
       r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
     }
