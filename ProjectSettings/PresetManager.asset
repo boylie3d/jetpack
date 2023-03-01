@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1386491679 &1
+PresetManager:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_DefaultPresets:
+  - first:
+      m_NativeTypeID: 114
+      m_ManagedTypePPtr: {fileID: 11500000, guid: 92d58c88e74a70343869a0620ad2a139, type: 3}
+      m_ManagedTypeFallback: 
+    second:
+    - m_Preset: {fileID: 2655988077585873504, guid: 75d7b88c3b642ed4599a0962dc3270df, type: 2}
+      m_Filter: 
+      m_Disabled: 0
+  - first:
+      m_NativeTypeID: 1006
+      m_ManagedTypePPtr: {fileID: 0}
+      m_ManagedTypeFallback: 
+    second:
+    - m_Preset: {fileID: 2655988077585873504, guid: 047390fceaf87a94ba5af54e5266cca1, type: 2}
+      m_Filter: glob:"Icons/**.(png|jpg|jpeg)"
+      m_Disabled: 0
+    - m_Preset: {fileID: 2655988077585873504, guid: 047390fceaf87a94ba5af54e5266cca1, type: 2}
+      m_Filter: glob:"Sprites/**.(png|jpg|jpeg)"
+      m_Disabled: 0
