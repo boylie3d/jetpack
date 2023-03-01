@@ -77,6 +77,10 @@ public class CharacterController2D : MonoBehaviour
       {
         r2d.velocity = new Vector2(r2d.velocity.x, maxSpeed);
       }
+      else
+      {
+        r2d.velocity = new Vector2(r2d.velocity.x, 0);
+      }
     }
     else
     {
