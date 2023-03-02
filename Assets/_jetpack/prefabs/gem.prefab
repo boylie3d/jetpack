@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 7096648741867600240}
   - component: {fileID: 7323179706124506284}
   m_Layer: 0
-  m_Name: collectable
+  m_Name: gem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

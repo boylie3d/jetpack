@@ -20,7 +20,6 @@ public class CharacterController2D : MonoBehaviour
   Transform t;
 
   public bool canClimb { get; set; } = false;
-  private bool _isClimbing = false;
 
   void Start()
   {
