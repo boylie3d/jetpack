@@ -1,12 +1,13 @@
 public class Ladder : PlayerTriggerable
 {
-  protected override void OnPlayerEnter(CharacterController2D player)
+  protected override void OnPlayerEnter(Player player)
   {
-    player.canClimb = true;
+    player.motor.canClimb = true;
 
   }
-  protected override void OnPlayerExit(CharacterController2D player)
+
+  protected override void OnPlayerExit(Player player)
   {
-    player.canClimb = false;
+    player.motor.canClimb = false;
   }
 }

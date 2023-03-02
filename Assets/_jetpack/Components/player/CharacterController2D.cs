@@ -8,7 +8,7 @@ public class CharacterController2D : MonoBehaviour
   // Move player in 2D space
   public float maxSpeed = 3.4f;
   public float jumpHeight = 6.5f;
-  public float gravityScale = 1.5f;
+  //public float gravityScale = 1.5f;
   public Camera mainCamera;
 
   bool facingRight = true;
@@ -28,7 +28,7 @@ public class CharacterController2D : MonoBehaviour
     mainCollider = GetComponent<CapsuleCollider2D>();
     r2d.freezeRotation = true;
     r2d.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-    r2d.gravityScale = gravityScale;
+    //r2d.gravityScale = gravityScale;
     facingRight = t.localScale.x > 0;
 
     if (mainCamera)
@@ -40,6 +40,7 @@ public class CharacterController2D : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    //r2d.gravityScale = 0;
     // Movement controls
     if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && (isGrounded || Mathf.Abs(r2d.velocity.x) > 0.01f))
     {
@@ -68,29 +69,29 @@ public class CharacterController2D : MonoBehaviour
       }
     }
 
-    // Ladder climb
-    if (canClimb)
-    {
-      r2d.gravityScale = 0;
-      if (Input.GetKey(KeyCode.W))
-      {
-        r2d.velocity = new Vector2(r2d.velocity.x, maxSpeed);
-      }
-      else
-      {
-        r2d.velocity = new Vector2(r2d.velocity.x, 0);
-      }
-    }
-    else
-    {
-      r2d.gravityScale = gravityScale;
-    }
+    //// Ladder climb
+    //if (canClimb)
+    //{
+    //  r2d.gravityScale = 0;
+    //  if (Input.GetKey(KeyCode.W))
+    //  {
+    //    r2d.velocity = new Vector2(r2d.velocity.x, maxSpeed);
+    //  }
+    //  else
+    //  {
+    //    r2d.velocity = new Vector2(r2d.velocity.x, 0);
+    //  }
+    //}
+    //else
+    //{
+    //  r2d.gravityScale = gravityScale;
+    //}
 
-    // Jumping
-    if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-    {
-      r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
-    }
+    //Jumping
+    //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+    //{
+    //  r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
+    //}
 
     // Camera follow
     if (mainCamera)
