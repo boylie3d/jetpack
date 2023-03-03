@@ -21,6 +21,8 @@ public class Player : Singleton<Player>
 
     _input = new PlayerAction();
     SetMovementEnabled(true);
+
+    Level.Instance.onComplete += () => SetMovementEnabled(false);
   }
 
   private void OnEnable()

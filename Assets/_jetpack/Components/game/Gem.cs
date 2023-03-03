@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Collectable : PlayerTriggerable
+public class Gem : PlayerTriggerable
 {
   public GameObject uncollected, collected;
   private Collider2D _coll;
@@ -17,7 +17,8 @@ public class Collectable : PlayerTriggerable
   {
     collected.SetActive(true);
     uncollected.SetActive(false);
-
     _coll.enabled = false;
+
+    Level.Instance.CollectGem(this);
   }
 }
