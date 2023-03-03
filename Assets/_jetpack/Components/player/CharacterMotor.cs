@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterMotor : MonoBehaviour
 {
+  public bool useGravity { get; set; }
+
   [SerializeField]
   private LayerMask groundLayer;
   [SerializeField]
@@ -60,9 +62,8 @@ public class CharacterMotor : MonoBehaviour
   }
 
   private Vector3 groundCheckOffset = new Vector3(0, 0.0625f, 0);
-  private Vector2 groundCheckSize = new Vector2(.3125f, .125f);
+  private Vector2 groundCheckSize = new Vector2(.3125f, 0.1f);
   private bool _isGrounded;
-  public bool useGravity { get; set; }
 
   private void GroundCheck()
   {
@@ -70,6 +71,7 @@ public class CharacterMotor : MonoBehaviour
     if (!_isGrounded && !isJumping && useGravity)
       AddVelocityToFrame(Physics2D.gravity);
   }
+
 
   private bool _isJumping;
   private float _jumpTimer;
@@ -314,67 +316,62 @@ public class CharacterMotor : MonoBehaviour
   //}
   //}
 
-  //private void OnDrawGizmos()
-  //{
-  //  //Draw ground check box
-  //  if (Physics2D.OverlapBox(transform.position + groundCheckOffset, groundCheckSize, 0, groundLayer))
-  //  {
-  //    Color boxColor = Color.green;
-  //    boxColor.a = 0.25f;
-  //    Gizmos.color = boxColor;
-  //    Gizmos.DrawCube(transform.position + groundCheckOffset, new Vector3(groundCheckSize.x, groundCheckSize.y, GameController.pixelSize));
-  //  }
-  //  else
-  //  {
-  //    Color boxColor = Color.red;
-  //    boxColor.a = 0.25f;
-  //    Gizmos.color = boxColor;
-  //    Gizmos.DrawCube(transform.position + groundCheckOffset, new Vector3(groundCheckSize.x, groundCheckSize.y, GameController.pixelSize));
-  //  }
-  //  //Draw left check box
-  //  if (Physics2D.OverlapBox(transform.position + leftCheckOffset, leftCheckSize, 0, groundLayer))
-  //  {
-  //    Color boxColor = Color.green;
-  //    boxColor.a = 0.25f;
-  //    Gizmos.color = boxColor;
-  //    Gizmos.DrawCube(transform.position + leftCheckOffset, new Vector3(leftCheckSize.x, leftCheckSize.y, GameController.pixelSize));
-  //  }
-  //  else
-  //  {
-  //    Color boxColor = Color.red;
-  //    boxColor.a = 0.25f;
-  //    Gizmos.color = boxColor;
-  //    Gizmos.DrawCube(transform.position + leftCheckOffset, new Vector3(leftCheckSize.x, leftCheckSize.y, GameController.pixelSize));
-  //  }
-  //  //Draw right check box
-  //  if (Physics2D.OverlapBox(transform.position + rightCheckOffset, rightCheckSize, 0, groundLayer))
-  //  {
-  //    Color boxColor = Color.green;
-  //    boxColor.a = 0.25f;
-  //    Gizmos.color = boxColor;
-  //    Gizmos.DrawCube(transform.position + rightCheckOffset, new Vector3(rightCheckSize.x, rightCheckSize.y, GameController.pixelSize));
-  //  }
-  //  else
-  //  {
-  //    Color boxColor = Color.red;
-  //    boxColor.a = 0.25f;
-  //    Gizmos.color = boxColor;
-  //    Gizmos.DrawCube(transform.position + rightCheckOffset, new Vector3(rightCheckSize.x, rightCheckSize.y, GameController.pixelSize));
-  //  }
-  //  //Draw right check box
-  //  if (Physics2D.OverlapBox(transform.position + topCheckOffset, topCheckSize, 0, groundLayer))
-  //  {
-  //    Color boxColor = Color.green;
-  //    boxColor.a = 0.25f;
-  //    Gizmos.color = boxColor;
-  //    Gizmos.DrawCube(transform.position + topCheckOffset, new Vector3(topCheckSize.x, topCheckSize.y, GameController.pixelSize));
-  //  }
-  //  else
-  //  {
-  //    Color boxColor = Color.red;
-  //    boxColor.a = 0.25f;
-  //    Gizmos.color = boxColor;
-  //    Gizmos.DrawCube(transform.position + topCheckOffset, new Vector3(topCheckSize.x, topCheckSize.y, GameController.pixelSize));
-  //  }
-  //}
+  private void OnDrawGizmos()
+  {
+    //Draw ground check box
+    Color boxColor = Color.green;
+
+    if (!_isGrounded)
+      boxColor = Color.red;
+
+    boxColor.a = 0.25f;
+    Gizmos.color = boxColor;
+    Gizmos.DrawCube(transform.position + groundCheckOffset, groundCheckSize);
+
+    ////Draw left check box
+    //if (Physics2D.OverlapBox(transform.position + leftCheckOffset, leftCheckSize, 0, groundLayer))
+    //{
+    //  Color boxColor = Color.green;
+    //  boxColor.a = 0.25f;
+    //  Gizmos.color = boxColor;
+    //  Gizmos.DrawCube(transform.position + leftCheckOffset, new Vector3(leftCheckSize.x, leftCheckSize.y, GameController.pixelSize));
+    //}
+    //else
+    //{
+    //  Color boxColor = Color.red;
+    //  boxColor.a = 0.25f;
+    //  Gizmos.color = boxColor;
+    //  Gizmos.DrawCube(transform.position + leftCheckOffset, new Vector3(leftCheckSize.x, leftCheckSize.y, GameController.pixelSize));
+    //}
+    ////Draw right check box
+    //if (Physics2D.OverlapBox(transform.position + rightCheckOffset, rightCheckSize, 0, groundLayer))
+    //{
+    //  Color boxColor = Color.green;
+    //  boxColor.a = 0.25f;
+    //  Gizmos.color = boxColor;
+    //  Gizmos.DrawCube(transform.position + rightCheckOffset, new Vector3(rightCheckSize.x, rightCheckSize.y, GameController.pixelSize));
+    //}
+    //else
+    //{
+    //  Color boxColor = Color.red;
+    //  boxColor.a = 0.25f;
+    //  Gizmos.color = boxColor;
+    //  Gizmos.DrawCube(transform.position + rightCheckOffset, new Vector3(rightCheckSize.x, rightCheckSize.y, GameController.pixelSize));
+    //}
+    ////Draw right check box
+    //if (Physics2D.OverlapBox(transform.position + topCheckOffset, topCheckSize, 0, groundLayer))
+    //{
+    //  Color boxColor = Color.green;
+    //  boxColor.a = 0.25f;
+    //  Gizmos.color = boxColor;
+    //  Gizmos.DrawCube(transform.position + topCheckOffset, new Vector3(topCheckSize.x, topCheckSize.y, GameController.pixelSize));
+    //}
+    //else
+    //{
+    //  Color boxColor = Color.red;
+    //  boxColor.a = 0.25f;
+    //  Gizmos.color = boxColor;
+    //  Gizmos.DrawCube(transform.position + topCheckOffset, new Vector3(topCheckSize.x, topCheckSize.y, GameController.pixelSize));
+    //}
+  }
 }
