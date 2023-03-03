@@ -3,8 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterMotor : MonoBehaviour
 {
-  public bool useGravity { get; set; }
-
   [SerializeField]
   private LayerMask groundLayer;
   [SerializeField]
@@ -19,28 +17,27 @@ public class CharacterMotor : MonoBehaviour
     _rigidbody = GetComponent<Rigidbody2D>();
   }
 
+  public void MoveHorizontal(float moveAmount)
+  {
+    Move(Vector3.right * moveAmount, _moveSpeed);
+  }
+
+  public void MoveClimb(float amount)
+  {
+    if (!canClimb) return;
+    Move(Vector2.up * amount, _moveSpeed);
+  }
+
+  public void Move(Vector2 moveAmount, float moveSpeed)
+  {
+    AddVelocityToFrame(moveAmount * moveSpeed);
+  }
+
   private Vector2 velocityThisFrame = Vector2.zero;
 
-  public void AddVelocityToFrame(Vector2 velocity)
+  private void AddVelocityToFrame(Vector2 velocity)
   {
-    var vel = velocity;
-    velocityThisFrame += vel;
-  }
-
-  private void FixedUpdate()
-  {
-    GroundCheck();
-
-    if (isJumping)
-      HandleJump();
-
-    _rigidbody.MovePosition(_rigidbody.position + (velocityThisFrame * Time.fixedDeltaTime));
-    velocityThisFrame = Vector2.zero;
-  }
-
-  public void Move(Vector2 amount)
-  {
-    AddVelocityToFrame(amount * _moveSpeed);
+    velocityThisFrame += velocity;
   }
 
   private bool _canClimb = false;
@@ -50,28 +47,8 @@ public class CharacterMotor : MonoBehaviour
     set
     {
       _canClimb = value;
-      useGravity = !_canClimb;
     }
   }
-
-  public void Climb(Vector2 amount)
-  {
-    if (!canClimb) return;
-
-    AddVelocityToFrame(amount * _moveSpeed);
-  }
-
-  private Vector3 groundCheckOffset = new Vector3(0, 0.0625f, 0);
-  private Vector2 groundCheckSize = new Vector2(.3125f, 0.1f);
-  private bool _isGrounded;
-
-  private void GroundCheck()
-  {
-    _isGrounded = Physics2D.OverlapBox(transform.position + groundCheckOffset, groundCheckSize, 0, groundLayer);
-    if (!_isGrounded && !isJumping && useGravity)
-      AddVelocityToFrame(Physics2D.gravity);
-  }
-
 
   private bool _isJumping;
   private float _jumpTimer;
@@ -88,6 +65,29 @@ public class CharacterMotor : MonoBehaviour
     }
   }
 
+  private Vector3 groundCheckOffset = new Vector3(0, 0.0625f, 0);
+  private Vector2 groundCheckSize = new Vector2(.3125f, 0.1f);
+  private bool _isGrounded;
+
+  private void GroundCheck()
+  {
+    _isGrounded = Physics2D.OverlapBox(transform.position + groundCheckOffset, groundCheckSize, 0, groundLayer);
+    if (!_isGrounded && !isJumping && !canClimb)
+      AddVelocityToFrame(Physics2D.gravity);
+  }
+
+
+  private void FixedUpdate()
+  {
+    GroundCheck();
+
+    if (isJumping)
+      HandleJump();
+
+    _rigidbody.MovePosition(_rigidbody.position + (velocityThisFrame * Time.fixedDeltaTime));
+    velocityThisFrame = Vector2.zero;
+  }
+
   public void HandleJump()
   {
     velocityThisFrame += new Vector2(0, _jumpHeight);
@@ -96,6 +96,7 @@ public class CharacterMotor : MonoBehaviour
     if (_jumpTimer >= _jumpTime)
       isJumping = false;
   }
+
 
   //states
   #region States

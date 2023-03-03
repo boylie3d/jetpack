@@ -66,7 +66,7 @@ public class Player : Singleton<Player>
   private void Update()
   {
     Vector2 movement = _input.FindAction("Movement").ReadValue<Vector2>();
-    motor.Move(Vector2.right * movement.x);
-    motor.Climb(Vector2.up * movement.y);
+    motor.MoveHorizontal(movement.x);
+    motor.MoveClimb(movement.y);
   }
 }

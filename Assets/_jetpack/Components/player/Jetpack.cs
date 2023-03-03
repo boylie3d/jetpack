@@ -29,7 +29,7 @@ public class Jetpack : MonoBehaviour
     set
     {
       _active = value;
-      Player.Instance.motor.useGravity = !_active;
+      //Player.Instance.motor.useGravity = !_active;
     }
   }
 
@@ -46,7 +46,7 @@ public class Jetpack : MonoBehaviour
       return;
 
     fuel -= _consumptionRate * Time.fixedDeltaTime;
-    Player.Instance.motor.AddVelocityToFrame(Vector2.up * _thrust);
+    Player.Instance.motor.Move(Vector2.up, _thrust);
     if (fuel == 0)
     {
       active = false;
