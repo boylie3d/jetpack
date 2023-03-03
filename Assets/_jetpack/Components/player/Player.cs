@@ -69,4 +69,10 @@ public class Player : Singleton<Player>
     motor.MoveHorizontal(movement.x);
     motor.MoveClimb(movement.y);
   }
+
+  public void Kill()
+  {
+    _input.Disable();
+    print("DED!");
+  }
 }

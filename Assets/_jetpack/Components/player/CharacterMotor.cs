@@ -68,14 +68,24 @@ public class CharacterMotor : MonoBehaviour
   private Vector3 groundCheckOffset = new Vector3(0, 0.0625f, 0);
   private Vector2 groundCheckSize = new Vector2(.3125f, 0.1f);
   private bool _isGrounded;
-
   private void GroundCheck()
   {
-    _isGrounded = Physics2D.OverlapBox(transform.position + groundCheckOffset, groundCheckSize, 0, groundLayer);
+    moveDamping = Vector2.one;
+    var hit = Physics2D.OverlapBox(transform.position + groundCheckOffset, groundCheckSize, 0, groundLayer);
+
+    if (hit)
+    {
+      var affector = hit.GetComponent<FloorAffector>();
+      if (affector)
+        moveDamping = (Vector2.one * affector.moveDamping);
+    }
+    _isGrounded = hit != null;
+
     if (!_isGrounded && !isJumping && !canClimb)
       AddVelocityToFrame(Physics2D.gravity);
   }
 
+  private Vector2 moveDamping = Vector2.one;
 
   private void FixedUpdate()
   {
@@ -84,7 +94,8 @@ public class CharacterMotor : MonoBehaviour
     if (isJumping)
       HandleJump();
 
-    _rigidbody.MovePosition(_rigidbody.position + (velocityThisFrame * Time.fixedDeltaTime));
+
+    _rigidbody.MovePosition(_rigidbody.position + (velocityThisFrame * moveDamping * Time.fixedDeltaTime));
     velocityThisFrame = Vector2.zero;
   }
 

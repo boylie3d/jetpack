@@ -24,6 +24,7 @@ public class LevelEndDoor : PlayerTriggerable
 
   protected override void OnPlayerEnter()
   {
-    print("i win'd!");
+    print("I WIN'D!");
+    Level.Instance.Complete();
   }
 }
