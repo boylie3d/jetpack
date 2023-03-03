@@ -1,23 +1,25 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class Ladder : PlayerTriggerable
 {
+  [OnValueChanged("Generate")]
   [Range(1, 16)]
   [SerializeField]
   private int _tileCount = 1;
   private SpriteRenderer _renderer;
   private BoxCollider2D _collider;
 
-  private void OnValidate()
-  {
-    if (!Application.isPlaying)
-      Generate();
-  }
+  //private void OnValidate()
+  //{
+  //  Debug.unityLogger.logEnabled = false;
+  //  Generate();
+  //  Debug.unityLogger.logEnabled = true;
+  //}
 
   private void Generate()
   {
-    print("running");
     if (!_renderer)
       _renderer = transform.GetComponentInChildren<SpriteRenderer>();
 
